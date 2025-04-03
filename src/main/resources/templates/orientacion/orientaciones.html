@@ -5,27 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vista de Datos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 
     <!-- Incluir el menú superior -->
     <div th:insert="~{fragments/menu :: menuSuperior}"></div>
 
-	<div class="container mt-4">
+    <div class="container mt-4">
 
         <!-- Tabla para visualizar los datos -->
-        <h3 class="text-primary text-center mb-4">Detalles de la Orientación</h3>
+		<h2 class="text-primary text-center my-5 shadow-sm py-4">
+		    Departamentos de Orientación
+		</h2>
         <div class="table-responsive">
             <table class="table table-hover table-sm table-bordered">
                 <thead class="table-dark text-center">
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Código Centro</th>
-                        <th scope="col">Nombre Centro</th>
+                        <th scope="col" class="sortable"><i class="bi bi-arrow-down-up text-info"></i> ID</th>
+                        <th scope="col" class="sortable"><i class="bi bi-arrow-down-up text-info"></i> Nombre</th>
+                        <th scope="col" class="sortable"><i class="bi bi-arrow-down-up text-info"></i> Email</th>
+                        <th scope="col" class="sortable"><i class="bi bi-arrow-down-up text-info"></i> Código Centro</th>
+                        <th scope="col" class="sortable"><i class="bi bi-arrow-down-up text-info"></i> Nombre Centro</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
@@ -36,25 +37,47 @@
                         <td th:text="${orientacion.email}"></td>
                         <td th:text="${orientacion.codigoCentro}"></td>
                         <td th:text="${orientacion.nombreCentro}"></td>
-						
                         <td>
-							<a href="/editar/{id}" th:href="@{/orientacion/editar/{id}(id=${orientacion.idOrientacion})}" class="badge bg-primary text-white p-2 text-decoration-none">editar</a>
-							<a href="/eliminar/{id}" th:href="@{/orientacion/eliminar/{id}(id=${orientacion.idOrientacion})}" class="badge bg-danger text-white p-2 text-decoration-none">x</a>
+                            <a href="/editar/{id}" th:href="@{/orientacion/editar/{id}(id=${orientacion.idOrientacion})}" class="badge bg-primary text-white p-2 text-decoration-none">editar</a>
+                            <a href="/eliminar/{id}" th:href="@{/orientacion/eliminar/{id}(id=${orientacion.idOrientacion})}" class="badge bg-danger text-white p-2 text-decoration-none">x</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
 			
-			<div class="text-start mt-4">
-			    <a th:href="@{/orientacion/nuevo}" class="btn btn-primary btn-lg">
-			        <i class="bi bi-clipboard-plus"></i> </a>
+			<!-- Toast de Bootstrap 5 -->
+			<div class="toast-container m-4 p-4" 			th:if="${idBorrado != null and idBorrado != 0}">
+			    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" id="deshacer-toast">
+			        <div class="d-flex">
+			            <div class="toast-body">
+			                Elemento eliminado
+			            </div>
+			            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+			        </div>
+			        <div class="d-flex justify-content-end">
+			            <!-- Enlace para deshacer la eliminación -->
+			            <a th:href="@{/orientacion/deshacer/{id}(id=${idBorrado})}" class="btn btn-sm btn-light text-dark m-2" role="button">Deshacer</a>
+			        </div>
+			    </div>
 			</div>
+			
+			
         </div>
     </div>
-	
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/ordenarTabla.js"></script>
 </body>
 </html>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var toastElement = document.getElementById('deshacer-toast');
+        if (toastElement) {
+            var toast = new bootstrap.Toast(toastElement);
+            toast.show();
+        }
+    });
+</script>
 

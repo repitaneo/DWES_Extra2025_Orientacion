@@ -1,8 +1,8 @@
 TRUNCATE TABLE orientacion;
 
-INSERT INTO orientacion (nombre, email, codigocentro, nombrecentro) VALUES
-('Juan Pérez', 'juan.perez@example.com', '1234', 'Colegio ABC'),
-('María Gómez', 'maria.gomez@example.com', '5678', 'Instituto XYZ'),
-('Carlos Ramírez', 'carlos.ramirez@example.com', '9101', 'Escuela Primaria 123'),
-('Ana Torres', 'ana.torres@example.com', '1121', 'Colegio Nacional'),
-('Pedro Martínez', 'pedro.martinez@example.com', '3141', 'Instituto Técnico Superior');
+INSERT INTO orientacion (nombre, email, codigocentro, nombrecentro, eliminado) VALUES
+('Juan Pérez', 'juan.perez', '12346677', 'Colegio ABC',false),
+('María Gómez', 'maria.gomez', '12346677', 'Instituto XYZ',false),
+('Carlos Ramírez', 'carlos.ramirez', '12346677', 'Escuela Primaria 123',false),
+('Ana Torres', 'ana.torres', '12346677', 'Colegio Nacional',false),
+('Pedro Martínez', 'pedro.martinez', '12346677', 'Instituto Técnico Superior',false);

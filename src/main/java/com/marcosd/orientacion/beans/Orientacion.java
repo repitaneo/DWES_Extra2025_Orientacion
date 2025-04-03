@@ -38,5 +38,7 @@ public class Orientacion {
     @Column(name = "nombrecentro")
     private String nombreCentro;
 	
-	
+
+    @Column(name = "eliminado")
+    private boolean eliminado = false; // Nuevo campo para eliminación lógica
 }
