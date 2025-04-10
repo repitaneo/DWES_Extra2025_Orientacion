@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.marcosd.orientacion.beans.Curso;
 import com.marcosd.orientacion.beans.Orientacion;
 import com.marcosd.orientacion.repositorio.OrientacionRepository;
 
@@ -25,6 +26,7 @@ public class OrientacionController {
 
 	@Autowired
 	private OrientacionRepository or;
+	
 	
 	@GetMapping
     public ModelAndView listarOrientaciones() {
@@ -43,6 +45,8 @@ public class OrientacionController {
         modelAndView.addObject("orientacion", new Orientacion()); // Añadimos un objeto vacío al modelo
         return modelAndView;
     }
+    
+    
 
     // Método POST para recibir el formulario y guardarlo en la base de datos
     @PostMapping("/nuevo")
@@ -76,6 +80,25 @@ public class OrientacionController {
 
         return "redirect:/orientacion";
     }
+ 
+    
+    
+    @GetMapping("/{id}")
+    public ModelAndView verOrientacion(@PathVariable Long id) {
+        
+    	Optional<Orientacion> optionalOrientacion = or.findById(id);
+        if (optionalOrientacion.isEmpty() || optionalOrientacion.get().isEliminado()) {
+            return new ModelAndView("redirect:/orientacion"); // Si está eliminado, redirige a la lista
+        }
+        
+        ModelAndView mav = new ModelAndView("orientacion/orientacion");
+        mav.addObject("orientacion", optionalOrientacion.get());
+        
+        Curso c = new Curso();
+        c.setArchivarSeptiembre(true);
+        mav.addObject("curso", c);
+        return mav;
+    }    
     
     
     @GetMapping("/editar/{id}")
@@ -95,12 +118,15 @@ public class OrientacionController {
     
     @GetMapping("/deshacer/{id}")
     public String deshacerEliminacion(@PathVariable Long id) {
-        Orientacion orientacion = or.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Orientacion no encontrada con ID " + id));
-
-        // Marcamos el campo eliminado como falso
-        orientacion.setEliminado(false);
-        or.save(orientacion);
+        
+    	Optional<Orientacion> orientacionOptional = or.findById(id);
+    	if(orientacionOptional.isPresent()) {
+            
+	        // Marcamos el campo eliminado como falso
+	        Orientacion orientacion = orientacionOptional.get();
+	        orientacion.setEliminado(false);
+	        or.save(orientacion);
+    	}
 
         // Redirigimos a la lista de orientaciones con la eliminación deshecha
         return "redirect:/orientacion";

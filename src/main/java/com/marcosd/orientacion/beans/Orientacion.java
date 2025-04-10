@@ -1,12 +1,17 @@
 package com.marcosd.orientacion.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.format.annotation.NumberFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -41,4 +46,7 @@ public class Orientacion {
 
     @Column(name = "eliminado")
     private boolean eliminado = false; // Nuevo campo para eliminación lógica
+    
+    @OneToMany(mappedBy = "orientacion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Curso> cursos = new ArrayList<>();
 }

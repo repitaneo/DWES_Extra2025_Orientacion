@@ -1,4 +1,6 @@
-TRUNCATE TABLE orientacion;
+DELETE FROM tutoria;
+DELETE FROM curso;
+DELETE FROM orientacion;
 
 INSERT INTO orientacion (nombre, email, codigocentro, nombrecentro, eliminado) VALUES
 ('Juan Pérez', 'juan.perez', '12346677', 'Colegio ABC',false),

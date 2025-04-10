@@ -27,7 +27,9 @@
                         <th scope="col" class="sortable"><i class="bi bi-arrow-down-up text-info"></i> Email</th>
                         <th scope="col" class="sortable"><i class="bi bi-arrow-down-up text-info"></i> Código Centro</th>
                         <th scope="col" class="sortable"><i class="bi bi-arrow-down-up text-info"></i> Nombre Centro</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col">X</th>
+                        <th scope="col">editar</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody class="text-center align-middle">
@@ -38,15 +40,26 @@
                         <td th:text="${orientacion.codigoCentro}"></td>
                         <td th:text="${orientacion.nombreCentro}"></td>
                         <td>
-                            <a href="/editar/{id}" th:href="@{/orientacion/editar/{id}(id=${orientacion.idOrientacion})}" class="badge bg-primary text-white p-2 text-decoration-none">editar</a>
-                            <a href="/eliminar/{id}" th:href="@{/orientacion/eliminar/{id}(id=${orientacion.idOrientacion})}" class="badge bg-danger text-white p-2 text-decoration-none">x</a>
+                            <a th:href="@{/orientacion/eliminar/{id}(id=${orientacion.idOrientacion})}" class="badge bg-danger text-white p-2 text-decoration-none">x</a>
                         </td>
-                    </tr>
+                        <td>
+                           <a th:href="@{/orientacion/editar/{id}(id=${orientacion.idOrientacion})}" class="badge bg-primary text-white p-2 text-decoration-none">editar</a>
+                        </td>
+                       <td>
+                          <a th:href="@{/orientacion/{id}(id=${orientacion.idOrientacion})}" class="badge bg-primary text-white p-2 text-decoration-none"><i class="bi bi-eye"></i></a>
+                       </td>
+                </tr>
                 </tbody>
             </table>
 			
+			
+			<div class="text-start mt-4">
+			   <a th:href="@{/orientacion/nuevo}" class="btn btn-primary btn-lg">
+			       <i class="bi bi-clipboard-plus"></i> </a>
+			</div>
+			
 			<!-- Toast de Bootstrap 5 -->
-			<div class="toast-container m-4 p-4" 			th:if="${idBorrado != null and idBorrado != 0}">
+			<div class="toast-container m-4 p-4" th:if="${idBorrado != null and idBorrado != 0}">
 			    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true" id="deshacer-toast">
 			        <div class="d-flex">
 			            <div class="toast-body">
