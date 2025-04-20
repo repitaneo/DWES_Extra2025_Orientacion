@@ -11,7 +11,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -34,14 +36,12 @@ public class Orientacion {
     @Pattern(regexp = "^[^@]+$", message = "El email no debe contener '@'. Solo introduce la parte antes de '@educastur.org'.")
     private String email;
 
-    @NotBlank(message = "El código de centro es obligatorio")
-    @Pattern(regexp = "\\d{8}", message = "El código de centro debe contener exactamente 8 cifras")
-    @Column(name = "codigocentro")
-    private String codigoCentro;
+    
+    
+    @OneToOne
+    @JoinColumn(name = "centro")
+    private Centro centro;
 
-    @NotBlank(message = "El nombre del centro es obligatorio")
-    @Column(name = "nombrecentro")
-    private String nombreCentro;
 	
 
     @Column(name = "eliminado")

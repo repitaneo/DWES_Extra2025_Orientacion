@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Curso</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div th:insert="~{fragments/menu :: menuSuperior}"></div>
+
+<div class="container mt-4">
+    <h2 class="text-black text-center my-5 shadow-sm py-4">
+        Editar <span class="badge rounded-pill bg-secondary" th:text="${curso.nombre}">Nombre Curso</span>
+    </h2>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Formulario Curso</h5>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/curso/edit}" th:object="${curso}" method="post">
+                        <input type="hidden" th:field="*{idCurso}"/>
+                        <input type="hidden" name="orientacion.idOrientacion" th:value="${curso.orientacion.idOrientacion}"/>
+
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                             <span class="badge rounded-pill bg-danger ms-2" 
+                                  role="button" 
+                                  data-bs-toggle="popover" 
+                                  data-bs-trigger="hover focus" 
+                                  title="Ayuda"
+                                  data-bs-content="Curso tipo 1ESO, 2ESO, 1BH, 2BH, ...">
+                               ?
+                            </span>
+                        <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required placeholder="1ESO">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="observaciones" class="form-label">Observaciones</label>
+                            <textarea class="form-control" id="observaciones" th:field="*{observaciones}" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="archivarSeptiembre" th:field="*{archivarSeptiembre}">
+                            <label class="form-check-label" for="archivarSeptiembre">
+                                Archivar en Septiembre
+                                    <span class="badge rounded-pill bg-danger ms-2" 
+                                          role="button" 
+                                          data-bs-toggle="popover" 
+                                          data-bs-trigger="hover focus" 
+                                          title="Ayuda"
+                                          data-bs-content="Se guardará la estructura del curso y sus actividades asociadas para consultas o clonados. En caso contrario, se borrará la estructura pero permanecerán las actividades">
+                                       ?
+                                    </span>
+                            </label>
+                        </div>
+                        
+                        
+						<div th:each="tutoria, iterStat : *{tutorias}">
+						    <input type="hidden" th:field="*{tutorias[__${iterStat.index}__].idTutoria}" />
+						    <input type="hidden" th:field="*{tutorias[__${iterStat.index}__].nombre}" />
+						    <input type="hidden" th:field="*{tutorias[__${iterStat.index}__].tutor}" />
+						    <input type="hidden" th:field="*{tutorias[__${iterStat.index}__].email}" />
+						    <input type="hidden" th:field="*{tutorias[__${iterStat.index}__].fecha}" />
+						    <input type="hidden" th:field="*{tutorias[__${iterStat.index}__].curso.idCurso}" />
+						</div>
+
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl);
+            });
+        });
+    </script>  
+</body>
+</html>
+
+
+

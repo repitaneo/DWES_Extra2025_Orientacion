@@ -27,27 +27,27 @@
                         <th scope="col" class="sortable"><i class="bi bi-arrow-down-up text-info"></i> Email</th>
                         <th scope="col" class="sortable"><i class="bi bi-arrow-down-up text-info"></i> Código Centro</th>
                         <th scope="col" class="sortable"><i class="bi bi-arrow-down-up text-info"></i> Nombre Centro</th>
-                        <th scope="col">X</th>
+                        <th scope="col"><i class="bi bi-trash fs-6"></i></th>
                         <th scope="col">editar</th>
-                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody class="text-center align-middle">
                     <tr th:each="orientacion : ${listado}">
                         <td th:text="${orientacion.idOrientacion}"></td>
-                        <td th:text="${orientacion.nombre}"></td>
+                        <td>
+							<a th:href="@{/orientacion/{id}(id=${orientacion.idOrientacion})}" class="badge bg-primary text-white p-2 text-decoration-none">
+								<span th:text="${orientacion.nombre}">nombre </span>
+							</a>
+						</td>
                         <td th:text="${orientacion.email}"></td>
-                        <td th:text="${orientacion.codigoCentro}"></td>
-                        <td th:text="${orientacion.nombreCentro}"></td>
+                        <td th:text="${orientacion.centro?.idCentro}"></td>
+                        <td th:text="${orientacion.centro?.nombre}"></td>
                         <td>
-                            <a th:href="@{/orientacion/eliminar/{id}(id=${orientacion.idOrientacion})}" class="badge bg-danger text-white p-2 text-decoration-none">x</a>
+                            <a th:href="@{/orientacion/eliminar/{id}(id=${orientacion.idOrientacion})}" class="badge bg-danger text-white p-2 text-decoration-none"><i class="bi bi-trash fs-6"></i></a>
                         </td>
                         <td>
-                           <a th:href="@{/orientacion/editar/{id}(id=${orientacion.idOrientacion})}" class="badge bg-primary text-white p-2 text-decoration-none">editar</a>
+                           <a th:href="@{/orientacion/editar/{id}(id=${orientacion.idOrientacion})}" class="badge bg-primary text-white p-2 text-decoration-none"><i class="bi bi-pencil-fill fs-6"></i></a>
                         </td>
-                       <td>
-                          <a th:href="@{/orientacion/{id}(id=${orientacion.idOrientacion})}" class="badge bg-primary text-white p-2 text-decoration-none"><i class="bi bi-eye"></i></a>
-                       </td>
                 </tr>
                 </tbody>
             </table>
@@ -55,7 +55,7 @@
 			
 			<div class="text-start mt-4">
 			   <a th:href="@{/orientacion/nuevo}" class="btn btn-primary btn-lg">
-			       <i class="bi bi-clipboard-plus"></i> </a>
+			       <i class="bi bi-clipboard-plus fs-3"></i> </a>
 			</div>
 			
 			<!-- Toast de Bootstrap 5 -->

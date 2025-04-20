@@ -9,4 +9,5 @@ import com.marcosd.orientacion.beans.Orientacion;
 public interface OrientacionRepository extends JpaRepository<Orientacion, Long>{
 
 	 List<Orientacion> findByEliminadoFalse(); // Solo recupera registros no eliminados
+	 
 }

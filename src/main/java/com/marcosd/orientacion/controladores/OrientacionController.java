@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.marcosd.orientacion.beans.Centro;
 import com.marcosd.orientacion.beans.Curso;
 import com.marcosd.orientacion.beans.Orientacion;
+import com.marcosd.orientacion.repositorio.CentroRepository;
 import com.marcosd.orientacion.repositorio.OrientacionRepository;
+import com.marcosd.orientacion.service.OrientacionService;
 
 import jakarta.validation.Valid;
 
@@ -26,6 +29,13 @@ public class OrientacionController {
 
 	@Autowired
 	private OrientacionRepository or;
+	
+	
+	@Autowired
+	OrientacionService orientacionService;
+	
+	@Autowired
+	CentroRepository centroRepository;
 	
 	
 	@GetMapping
@@ -41,8 +51,12 @@ public class OrientacionController {
     // Método GET para mostrar el formulario
     @GetMapping("/nuevo")
     public ModelAndView showNuevoForm() {
-        ModelAndView modelAndView = new ModelAndView("orientacion/orientacionForm");
+        
+    	ModelAndView modelAndView = new ModelAndView("orientacion/orientacionForm");
         modelAndView.addObject("orientacion", new Orientacion()); // Añadimos un objeto vacío al modelo
+        modelAndView.addObject("listaCentros", centroRepository.findByOrientacionIsNullOrderByMunicipioAscNombreAsc());
+        
+        
         return modelAndView;
     }
     
@@ -56,12 +70,13 @@ public class OrientacionController {
             return new ModelAndView("orientacion/orientacionForm");
         }
         // Aquí podrías guardar el objeto 'orientacion' en la base de datos
-        or.save(orientacion);  // Llamada al servicio para guardar
+    	orientacionService.guardarOrientacionConCursos(orientacion);
 
         // Redirige a una vista de confirmación o lista de orientaciones
         ModelAndView modelAndView = new ModelAndView("redirect:/orientacion");
         return modelAndView;
     }	
+    
     
     
     
@@ -109,8 +124,18 @@ public class OrientacionController {
             return new ModelAndView("redirect:/orientacion"); // Si está eliminado, redirige a la lista
         }
         
+        Orientacion orientacion = optionalOrientacion.get();
+        
+        List<Centro> listaCentros = centroRepository.findByOrientacionIsNullOrderByMunicipioAscNombreAsc();
+        if(orientacion.getCentro()!=null) {
+        	
+        	listaCentros.add(optionalOrientacion.get().getCentro());
+        }
+        
         ModelAndView mav = new ModelAndView("orientacion/orientacionForm");
         mav.addObject("orientacion", optionalOrientacion.get());
+        mav.addObject("listaCentros", listaCentros);
+        
         return mav;
     }
     

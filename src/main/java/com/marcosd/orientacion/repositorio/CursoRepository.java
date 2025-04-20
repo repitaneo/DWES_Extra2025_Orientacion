@@ -8,5 +8,7 @@ import com.marcosd.orientacion.beans.Curso;
 import com.marcosd.orientacion.beans.Orientacion;
 
 public interface CursoRepository extends JpaRepository<Curso, Long>{
+	
+	List<Curso> findByOrientacion(Orientacion orientacion);
 
 }
