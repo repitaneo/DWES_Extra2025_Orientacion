@@ -1,28 +1,28 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="menuSuperior">
+<nav class="navbar navbar-expand-lg navbar-dark bg-light border-bottom border-5 border-secondary" th:fragment="menuSuperior">
     <div class="container-fluid">
-        <a class="navbar-brand text-warning fw-bold" href="#">Sistema de Orientación</a>
+        <a th:href="@{/}" class="btn btn-lg btn-light mx-2 fw-bold">
+            ACTUA
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link btn btn-sm  bg-warning text-dark px-3 mx-2 fw-bold hover-light" 
-					th:href="@{/orientacion}">Orientación</a>
+                    <a th:href="@{/orientacion}" class="btn btn-lg btn-primary mx-2">
+                        Departamento orientacion
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-sm  bg-warning text-dark px-3 mx-2 fw-bold hover-light" 
-					th:href="@{/cursos}">Cursos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-sm  bg-warning text-dark px-3 mx-2 fw-bold hover-light" 
-					th:href="@{/tutoria}">Tutorías</a>
+                    <a th:href="@{/actividad?page=0}" class="btn btn-lg btn-warning mx-2">
+                        Actividades del centro
+                    </a>
                 </li>
             </ul>
+            <a th:href="@{/configuracion}" class="btn btn-light btn-lg">
+                <i class="bi bi-gear-fill fs-2"></i>
+            </a>
         </div>
     </div>
 </nav>
-
-
-

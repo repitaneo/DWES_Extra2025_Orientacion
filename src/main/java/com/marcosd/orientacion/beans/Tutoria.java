@@ -1,9 +1,9 @@
 package com.marcosd.orientacion.beans;
 
-import java.time.LocalDate;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import org.springframework.format.annotation.DateTimeFormat;
+
 
 import com.marcosd.orientacion.service.FechaService;
 

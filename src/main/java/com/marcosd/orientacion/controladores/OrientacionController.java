@@ -83,15 +83,19 @@ public class OrientacionController {
     // Eliminar una orientación (eliminación lógica)
     @GetMapping("/eliminar/{id}")
     public String eliminarOrientacion(@PathVariable Long id,RedirectAttributes redirectAttributes) {
+    
         Optional<Orientacion> optionalOrientacion = or.findById(id);
         if (optionalOrientacion.isPresent()) {
+        	
             Orientacion orientacion = optionalOrientacion.get();
-            orientacion.setEliminado(true);
-            or.save(orientacion);
-            
-            redirectAttributes.addFlashAttribute("idBorrado", orientacion.getIdOrientacion());
+            if(orientacion.getCursos().size()==0) {
+            	orientacion.setEliminado(true);
+            	orientacion.setCentro(null);
+            	or.save(orientacion);
+                redirectAttributes.addFlashAttribute("idBorrado", orientacion.getIdOrientacion());
+            }
         }
-        else redirectAttributes.addFlashAttribute("idBorrado", 0);
+        // else redirectAttributes.addFlashAttribute("idBorrado", 0);
 
         return "redirect:/orientacion";
     }
